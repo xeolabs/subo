@@ -12,6 +12,14 @@ var numberGuess = new Subo.Application({
             }
         });
 
+        // Add a service to get URLs to resources (images etc) relative to the application's home URL.
+ 
+        this.addService('resourceFinder', {
+            getUrl : function(name) {
+                return (args.homeUrl | '') + '/' + name;
+            }
+        });
+
         // Application's root controller just provides a frame around the whole application
 
         this.setRootController(new Subo.Controller({
@@ -30,11 +38,13 @@ var numberGuess = new Subo.Application({
 
                     onEnter:function(args) {
 
-                        // The View has the child-Controller's HTML embedded within it:
+                        // You can see below how the View has the child-Controller's HTML embedded within it, containing an image. 
+                        // We're using the resource finder service to get an absolute URL to the image: 
 
                         this.setView(new Subo.View({
                             getHtml: function() {
-                                return '<img src="logo.jpg"/><br/><br/>' + this.getChildControllerHtml('game');
+                                return '<img src="' + this.getService('resourceFinder').getUrl('logo.jpg') + '"/>' +
+                                       '<br/><br/>' + this.getChildControllerHtml('game');
                             }
                         }));
 
