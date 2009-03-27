@@ -151,5 +151,3 @@ var numberGuess = new Subo.Application({
     }
 });
 
-
-numberGuess.start({'message':'Welcome to the login demo. Please log in.'});
