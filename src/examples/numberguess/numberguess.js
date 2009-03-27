@@ -16,7 +16,7 @@ var numberGuess = new Subo.Application({
  
         this.addService('resourceFinder', {
             getUrl : function(name) {
-                return (args.homeUrl | '') + '/' + name;
+                return (args.homeUrl || '') + '/' + name;
             }
         });
 
