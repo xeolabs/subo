@@ -244,8 +244,16 @@ Subo.Application = function(cfg) {
         this.services[name] = service;
     }
 
-    this.getService = function(name) {
-
+/** Returns the service withe the given name
+ * @param Name of service
+ * @return The service
+ */
+   this.getService = function(name) {
+        var s = this.controller.application.services[name];
+        if (s == null) {
+            throw 'Reference to undefined Service in EventHandler onEvent callback: "' + name + '"';
+        }
+        return s;
     }
 
     /** Sets the root controller for this Application.
@@ -559,6 +567,18 @@ Subo.View = function(cfg) {
     this.getModel = function() {
         return this.controller.model;
     }
+
+/** Returns the service with the given name
+ * @param Name of service
+ * @return The service
+ */
+   this.getService = function(name) {
+        var s = this.controller.application.services[name];
+        if (s == null) {
+            throw 'Reference to undefined Service in EventHandler onEvent callback: "' + name + '"';
+        }
+        return s;
+    }
 }
 
 Subo.EventHandler = function(cfg) {
@@ -610,6 +630,10 @@ Subo.EventHandler = function(cfg) {
         }
     }
 
+/** Returns the service with the given name
+ * @param Name of service
+ * @return The service
+ */
     this.getService = function(name) {
         var s = this.controller.application.services[name];
         if (s == null) {
