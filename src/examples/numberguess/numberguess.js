@@ -1,5 +1,5 @@
 NumberGuess = function(cfg) {
-   	NumberGuess.superclass.constructor(cfg);
+   	NumberGuess.superclass.constructor.call(this, cfg);
 }
 
 Subo.extend(NumberGuess, Subo.Application, {
