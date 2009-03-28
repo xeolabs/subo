@@ -1,4 +1,8 @@
-var NumberGuess = Subo.extend(Subo.Application, {
+NumberGuess = function(cfg) {
+   	NumberGuess.superclass.constructor(cfg);
+}
+
+Subo.extend(NumberGuess, Subo.Application, {
     name: 'numberguess',
 
     onStart: function(args) {
