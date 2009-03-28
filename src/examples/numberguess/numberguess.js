@@ -1,4 +1,5 @@
 NumberGuess = function(cfg) {
+        cfg = cfg ? cfg : {};
    	NumberGuess.superclass.constructor.call(this, cfg);
 }
 
