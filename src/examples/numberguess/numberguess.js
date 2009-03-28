@@ -1,4 +1,4 @@
-var numberGuess = new Subo.Application({
+var NumberGuess = Subo.extend(Subo.Application, {
     name: 'numberguess',
 
     onStart: function(args) {
