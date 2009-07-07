@@ -1,4 +1,4 @@
-CellController = function(cfg) {
+var CellController = function(cfg) {
 
     cfg.onStart = function(args) {
 
@@ -42,8 +42,7 @@ CellController = function(cfg) {
                                'width="' + model.width + '" height="' + model.height + '">' +
                                '<tr><td bgcolor = "' + randomColour + '" width = "' + model.width + '" height = "' +
                                model.height + '"><a href = "' + this.getViewEventUrl('clicked') +
-                               '"><img src = "blank.gif" border = "0px" width = "' + model.width +
-                               '" height = "' + model.height + '"></a></td></tr></table>';
+                               '"><img src = "' + this.getService('resourceFinder').getUrl('blank.gif') + '" border = "0px" width = "100%" height = "100%"></a></td></tr></table>';
                     }
                 }));
 
@@ -158,65 +157,82 @@ Subo.extend(CellController, Subo.Controller, {
 
 });
 
-var treemap = new Subo.Application({
-    name: 'treemap',
+var TreeMap = function(cfg) {
+    cfg = cfg || {};
 
-    onStart: function(args) {
-        this.setRootController(new Subo.Controller({
-            name:'root',
+    return new Subo.Application({
+        name: 'treemap',
 
-            onStart:function(args) {
-                this.addState(new Subo.State({
-                    name: 'initial',
+        onStart: function(args) {
+            
+            // Add a service to get URLs to resources (images etc) relative to the application's home URL.
 
-                    onEnter: function(args) {
+            this.addService('resourceFinder', {
+                getUrl : function(name) {
+                    return (args.homeUrl) ? args.homeUrl + '/' + name : name;
+                }
+            });
 
-                        this.setView(new Subo.View({
-                            getHtml:function() {
-                                return '<center>' +
-                                       '</br>' +
-                                       '<img border="0px" src="logo.png" width="440" height="145"/>' +
-                                       '</br>' +
-                                       '<a href="' +
-                                       this.getViewEventUrl('clear') +
-                                       '">Clear</a>' +
-                                       '</br>' +
-                                       '</br>' +
-                                       '<table cellpadding="0px" cellspacing="0px" border="0px" width="400" height="300">' +
-                                       '<tr>' +
-                                       '<td>' +
-                                       this.getChildControllerHtml('root') +
-                                       '</td>' +
-                                       '</tr>' +
-                                       '</table>' +
-                                       '</br>' +
-                                       '<small>A treemap is a space-constrained visualization of a hierarchical structure, in this case a controller hierarchy.</br>' +
-                                       'When you click on a cell, its controller creates two child controllers, each with their own cell, and arranges</br>' +
-                                       'the cells of the children within its own. The arrangement alternates between horizontal and vertical as </br>' +
-                                       'one descends into the hierarchy. Eventually, you will end up with a binary tree of Controllers.</br> </br>' +
-                                       'Notice how fast the subdivision occurs, thanks to Jandals use of AJAX.</br></br>' +
-                                       '</br>Clicking <b>Clear</b> clears the map by deleting the child controllers of the root.</small>' +
-                                       '</center>';
-                            }
-                        }));
-
-                        this.addViewEventHandler(new Subo.EventHandler({
-                            name: 'clear',
-                            onEvent:function(args) {
-                                this.doTransition('initial');
-                            }
-                        }));
-
-                        this.addChildController(new CellController({
-                            name: 'root',
-                            args: {'width': 400, 'height': 300, 'axis':'vert', 'colour':'#9999FF'}
-                        }))
-                    }
-                }));
-            }
-        }))
-    }
-});
+            this.setRootController(new Subo.Controller({
+                name:'root',
 
 
-treemap.start({});
+                onStart:function(args) {
+
+                    this.addState(new Subo.State({
+                        name: 'initial',
+
+                        onEnter: function(args) {
+
+                            this.setView(new Subo.View({
+                                getHtml:function() {
+                                    return '<center>' +
+                                           '</br>' +
+                                           '<img border="0px" src="' + this.getService('resourceFinder').getUrl('logo.png') + '" width="440" height="145"/>' +
+                                           '</br>' +
+                                           '<a href="' +
+                                           this.getViewEventUrl('clear') +
+                                           '">Clear</a>' +
+                                           '</br>' +
+                                           '</br>' +
+                                           '<table cellpadding="0px" cellspacing="0px" border="0px" width="400" height="300">' +
+                                           '<tr>' +
+                                           '<td>' +
+                                           this.getChildControllerHtml('root') +
+                                           '</td>' +
+                                           '</tr>' +
+                                           '</table>' +
+                                           '</br>' +
+                                           '<small>A treemap is a space-constrained visualization of a hierarchical structure, in this case a controller hierarchy.</br>' +
+                                           'When you click on a cell, its controller creates two child controllers, each with their own cell, and arranges</br>' +
+                                           'the cells of the children within its own. The arrangement alternates between horizontal and vertical as </br>' +
+                                           'one descends into the hierarchy. Eventually, you will end up with a binary tree of Controllers.</br> </br>' +
+                                           'Notice how fast the subdivision occurs, thanks to Jandals use of AJAX.</br></br>' +
+                                           '</br>Clicking <b>Clear</b> clears the map by deleting the child controllers of the root.</small>' +
+                                           '</center>';
+                                }
+                            }));
+
+                            this.addViewEventHandler(new Subo.EventHandler({
+                                name: 'clear',
+                                onEvent:function(args) {
+                                    this.doTransition('initial');
+                                }
+                            }));
+
+                            this.addChildController(new CellController({
+                                name: 'root',
+                                args: {'width': 400, 'height': 300, 'axis':'vert', 'colour':'#9999FF'}
+                            }))
+                        }
+                    }));
+                }
+            })
+                    )
+        }
+    })
+            ;
+}
+        ;
+
+

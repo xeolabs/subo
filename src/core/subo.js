@@ -219,6 +219,7 @@ Subo.Application = function(cfg) {
      * @param args
      */
     this.start = function(args) {
+        args = args || {};
         this.rootController = null;
         this.services = [];
         this.onStart(args);
