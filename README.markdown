@@ -6,9 +6,9 @@ Get downloads and play with a couple of demos at: [Subo Home][subo-home]
 
 ## Author
 
-Subo is written by [Lindsay Kay][neocoders-github]. Lindsay has a skunkworks at [http://www.neocoders.com][neocoders.com] where you can find more of this kind of stuff.
+Subo is written by [Lindsay Kay][neocoders-github]. Lindsay has a skunkworks at [http://www.xeolabs.com][xeolabs.com] where you can find more of this kind of stuff.
 
-[subo-home]: http://www.neocoders.com/portal/projects/subo
-[neocoders-github]: http://github.com/neocoders
-[neocoders.com]: http://www.neocoders.com
+[subo-home]: http://www.xeolabs.com/portal/projects/subo
+[xeolabs-github]: http://github.com/xeolabs
+[xeolabs.com]: http://www.xeolabs.com
 
